@@ -1,12 +1,16 @@
 # Payton Lutterman
 # Alarms for Clock
-# Last Updated 6/31
+# Last Updated 9-11
 
 
 
 from winsound import *
 
-def alarm1():
+import pygame as pg
+
+# Mario Theme Song
+"""
+ def alarm1():
     for i in range(5):
         Beep(480, 200);
 
@@ -321,23 +325,13 @@ def alarm1():
 
     Beep(233, 200);
 
-    Beep(246, 200);
+    Beep(246, 200); 
+"""
 
-    def alarm2():
-        (880, 700),
-        (587, 1000),
-        (698, 500),
-        (880, 500),
-        (587, 1000),
-        (698, 500),
-        (880, 250),
-        (1046, 250),
-        (988, 500),
-        (784, 500),
-        (699, 230),
-        (784, 250),
-        (880, 500),
-        (587, 500),
-        (523, 250),
-        (659, 250),
-        (587, 750)
+def alarm2():
+    pg.mixer.music.load("assets/sound/Monkey Screeches 1 - QuickSounds.com.mp3")
+    pg.mixer.music.play(loops=-1, fade_ms=200)
+
+def alarm3():
+    pg.mixer.music.load("assets/sound/Monkeys in The Zoo - QuickSounds.com.mp3")
+    pg.mixer.music.play(loops=-1, fade_ms=200)
