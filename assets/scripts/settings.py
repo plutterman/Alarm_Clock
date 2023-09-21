@@ -1,6 +1,6 @@
 # Payton Lutterman
 # Changeable Variables For Alarm Clock
-# Last Updated 9-11
+# Last Updated 9-20
 
 # Project Info
 TITLE = "Alarm Clock"
@@ -9,18 +9,10 @@ TITLE = "Alarm Clock"
 WIDTH = 800
 HEIGHT = 500
 geo_string = str(WIDTH)+"x"+str(HEIGHT)
-bg_color = "gray19"
+bg_color = "light gray"
 cursor_style = "pirate"
 
 PST = -7
 MST = -6
 CST = -5
 EST = -4
-
-colors = [
-    "Blue",
-    "Red",
-    "Green",
-    "Orange",
-    "Pink"
-]

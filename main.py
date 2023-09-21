@@ -1,7 +1,7 @@
 # Payton Lutterman
 # Alarm Clock
-# Last Updated 9-10
-import random
+# Last Updated 9-20
+
 # Imports
 import random as r
 from tkinter import *
@@ -12,6 +12,7 @@ import time
 import datetime as date_time
 from assets.scripts.settings import *
 from assets.scripts.alarms import *
+import random
 
 # Global Variables
 time_text = ""
@@ -41,6 +42,7 @@ cur_min = ""
 cur_hour = ""
 tag = ""
 update_frames = ""
+darkm = False
 
 tz = MST
 
@@ -51,13 +53,13 @@ def get_time(tz):
 
 
     total_time = cal.timegm(time.gmtime())
-    total_time += tz * 3600 # Convert timezone offset to seconds
+    total_time += tz * 3600
     cur_sec = total_time % 60
     total_min = total_time // 60
     cur_min = total_min % 60
     total_hour = total_min // 60
     cur_hour = total_hour % 24
-    #cur_hour += tz
+
     tag = ""
 
     if not is_mil:
@@ -75,9 +77,6 @@ def get_time(tz):
         str_sec = "0"+str(cur_sec)
     if cur_min < 10:
         str_min = "0" + str(cur_min)
-
-    #if cur_sec%10 == 0:
-        #root.configure(background=r.choice(colors))
 
     time_string = str.format("{0:>2}:{1}:{2} {3}",str_hour,str_min,str_sec,tag)
     if (time_string == alarm_string and cur_sec == 0) and (not alarm_playing):
@@ -156,6 +155,10 @@ def create_widgets():
     style.theme_use("clam")
     style.configure("TCombobox", fieldbackground=bg_color, foreground="red", width = 5, lightcolor= bg_color)
 
+    # Dark Mode Toggle
+    dm_toggle = Checkbutton(top_ui, text="Dark Mode", command=toggle_dm, font=uifont, bg=bg_color, fg="red")
+    dm_toggle.pack(side=LEFT)
+
     # Set Alarm
     set_alarm_min = Spinbox(top_ui, from_=0, to=59, justify="center", width=2, font=uifont, bg=bg_color,fg="red")
     set_alarm_min.config(state=DISABLED)
@@ -173,6 +176,33 @@ def create_widgets():
     snooze_bttn = Button(ui, text="SNOOZE", command=snooze, height=40, width=10, font=uifont, bg=bg_color,fg="red")
     snooze_bttn.pack(side=LEFT, fill=X, expand=True)
 
+def configure_widget_bg_color(widget):
+    if widget.winfo_children():
+        for child in widget.winfo_children():
+            configure_widget_bg_color(child)
+    try:
+        # Skip widgets you don't want to change
+        if widget != stop_bttn:
+            widget.config(background=bg_color)
+
+            # Check if the widget is a combobox and configure its background
+            if isinstance(widget, ttk.Combobox):
+                style = ttk.Style()
+                style.configure("TCombobox", fieldbackground=bg_color)
+    except:
+        pass
+def toggle_dm():
+    global bg_color
+    global darkm
+
+    darkm = not darkm
+
+    if darkm == True:
+        bg_color = "black"
+    else:
+        bg_color = "light gray"
+
+    configure_widget_bg_color(root)
 def set_timezone(trash):
     global tz
     temp = timezone_cb.get()
